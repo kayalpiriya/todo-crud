@@ -1,8 +1,13 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import cors from 'cors'
 
 
 const app = express();
+
+app.use(cors({
+    
+}));
 
 app.use(express.json());
 
@@ -13,18 +18,13 @@ const todoSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 
-
 })
 const Todo = mongoose.model('Todo', todoSchema)
-
-
 
   app.post('/todos', async (req,res)=>{
     const reqBody = req.body;
     const result = await Todo.insertMany(reqBody);
     res.json({ message: "Bulk tasks added successfully!", data: result });
-
-   
   })
 
 app.get('/todos', async (req, res) => {
@@ -56,7 +56,6 @@ app.put('/todos/:id', async(req,res)=>{
     await Todo.findByIdAndUpdate({_id: id}, req.body)
     res.json(req.body);
 })
-
 
 
 app.listen(3000, () => {
