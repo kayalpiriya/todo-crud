@@ -1,7 +1,7 @@
 import express from 'express'
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 import cors from 'cors'
-
+import todoRoutes from './Routes/todoRoutes.js'
 
 const app = express();
 
@@ -11,52 +11,8 @@ app.use(cors({
 
 app.use(express.json());
 
-const todoSchema = new mongoose.Schema({
 
-    title: { type: String, required: true },
-    completed: { type: Boolean, default: false },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
-
-})
-const Todo = mongoose.model('Todo', todoSchema)
-
-  app.post('/todos', async (req,res)=>{
-    const reqBody = req.body;
-    const result = await Todo.insertMany(reqBody);
-    res.json({ message: "Bulk tasks added successfully!", data: result });
-  })
-
-app.get('/todos', async (req, res) => {
-    const data = await Todo.find()
-
-
-    res.json(data)
-})
-app.get('/todos/:id', async (req, res) => {
-    const id = req.params.id; 
-    const data = await Todo.findById(id)
-   
-
-    res.json(data)
-})
-
-app.delete('/todos/:id', async (req, res) => {
-    const id = req.params.id;
-
-    await Todo.deleteOne({ _id: id })
-
-    res.json({ "message": "Deleted Successfully" });
-})
-
-
-
-app.put('/todos/:id', async(req,res)=>{
-    const id = req.params.id;
-    await Todo.findByIdAndUpdate({_id: id}, req.body)
-    res.json(req.body);
-})
-
+app.use("/", todoRoutes)
 
 app.listen(3000, () => {
     mongoose.connect('mongodb+srv://kayalpiriya_09:kayal2004@kayalpiriya.d4mp54n.mongodb.net/?retryWrites=true&w=majority&appName=kayalpiriya')
