@@ -20,6 +20,6 @@ app.listen(3000, () => {
         .catch(err => console.log(err));
 
 
-    console.log('server is running on https://todo-frontend-nine-ecru.vercel.app/')
+    console.log('server is running on http://localhost:3000/')
 })
 
