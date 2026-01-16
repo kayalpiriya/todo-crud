@@ -15,7 +15,7 @@ app.use(express.json());
 app.use("/todos", todoRoutes)
 
 app.listen(3000, () => {
-    mongoose.connect('mongodb://localhost:27017/')
+    mongoose.connect('mongodb+srv://kayalpiriya_09:kayal2004@kayalpiriya.d4mp54n.mongodb.net/?appName=kayalpiriya')
         .then(() => console.log("DB connected"))
         .catch(err => console.log(err));
 
